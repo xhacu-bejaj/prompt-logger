@@ -8,6 +8,7 @@ from app.api.routes import router
 ## Set up sqlite db and save the logs there
 # add async
 # the log endpoint should have INFO and ERRORS, the others meh
+# history.log
 
 
 LOG_CONFIG_PATH = Path(__file__).parent / "log_config.json"
@@ -32,7 +33,7 @@ def main():
    uvicorn.run(
         "main:app",
         host="127.0.0.1",
-        port=8080,
+        port=8083,
         reload=True,
         log_config=LOG_CONFIG  
     )

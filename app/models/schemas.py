@@ -6,8 +6,8 @@ from pydantic import BaseModel
 from app.services.client_factory import Provider
 
 class GenerateResponse(BaseModel):
-    response:str
-    logs:List[str]|None=None
+    response:str|None
+    #logs:List[str]#|None=None
 
 class Request(BaseModel):
     user_prompt:str
@@ -18,6 +18,8 @@ class Log(BaseModel):
     prompt:str
     response:str
     timestamp:datetime
+    level:str
+    message:str
 
 class LogHistory(BaseModel):
     history:List[Log]

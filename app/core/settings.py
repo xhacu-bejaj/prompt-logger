@@ -1,13 +1,18 @@
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 try:
     from dotenv import load_dotenv
     load_dotenv()
-except Exception:
-    pass
+except Exception as e:
+    logger.exception(f"load_dotenv failed to retrieve environment variables: {e}")
+    raise ValueError(f"Failed to retrieve environment variables:") from e
 
 class Settings:
     DB_PATH = os.getenv('DB_PATH','promptlog.db')
     LOG_LEVEL = os.getenv('LOG_LEVEL','INFO')
-    LLM_API_KEY = os.getenv('LLM_API_KEY','')
+    GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY','')
+    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 settings = Settings()
