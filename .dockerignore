@@ -1,0 +1,14 @@
+Ignore development environment files and directories
+
+.venv
+venv
+pycache
+
+promptlog.db
+*.log
+
+.git
+.gitignore
+
+.vscode
+.idea

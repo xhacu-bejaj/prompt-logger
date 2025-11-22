@@ -1,46 +1,46 @@
-import json
-from pathlib import Path
-
+import logging
 from fastapi import FastAPI
 import uvicorn
 
+# Import the necessary setup functions
+from app.services.logger import setup_logging
+from app.services import database # Importing this module ensures the log table is created
 from app.api.routes import router
-## Set up sqlite db and save the logs there
-# add async
-# the log endpoint should have INFO and ERRORS, the others meh
-# history.log
+from app.services.database import create_log_table # Ensure this is imported
 
 
-LOG_CONFIG_PATH = Path(__file__).parent / "log_config.json"
-try:
-    with open(LOG_CONFIG_PATH, "r") as f:
-        LOG_CONFIG = json.load(f)
-except FileNotFoundError:
-    print(f"Error: Logging config file not found at {LOG_CONFIG_PATH}. Using default Uvicorn logging.")
-    # Fallback to Uvicorn's internal configuration if file is missing
-    from uvicorn.config import LOGGING_CONFIG as LOG_CONFIG
+# 1. Database and Logging Setup (MUST be executed before the app starts)
+# Note: By simply importing the database module, the create_log_table() 
+# function runs.
+#database 
+setup_logging() # Configures the custom SQLite handler and console handler
 
+
+
+
+
+
+
+
+# 1. Database Setup - CRITICAL: This MUST run before anything else starts using the DB.
+create_log_table() 
+
+# 2. Logging Setup
+setup_logging() 
+logger = logging.getLogger("MAIN")
+logger.info("Application starting up...")
+
+# 3. FastAPI App Setup
 app = FastAPI(
-    title="Student Prompt Logger",
-    version="0.1.0",
+    title="Prompt Logger & Generative AI API",
+    description="A microservice for managing LLM interactions and logging history to SQLite.",
+    version="1.0.0"
 )
 
 app.include_router(router)
 
-def main():
-   
-   print("Application is starting...")
-   uvicorn.run(
-        "main:app",
-        host="127.0.0.1",
-        port=8083,
-        reload=True,
-        log_config=LOG_CONFIG  
-    )
 
 
 if __name__ == "__main__":
-    main()
-
-
-
+    logger.info("Starting Uvicorn server...")
+    uvicorn.run("main:app", host="127.0.0.1", port=8080, log_level="info", reload=True)
