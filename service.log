@@ -1,0 +1,82 @@
+2025-11-22 21:47:37,798 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:37,798 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:37,803 - MAIN - INFO - Starting Uvicorn server...
+2025-11-22 21:47:37,803 - MAIN - INFO - Starting Uvicorn server...
+2025-11-22 21:47:39,607 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:39,607 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:39,857 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:39,857 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:39,857 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:39,857 - MAIN - INFO - Application starting up...
+2025-11-22 21:47:54,068 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 1...'
+2025-11-22 21:47:54,068 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 1...'
+2025-11-22 21:47:54,068 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 1...'
+2025-11-22 21:47:54,068 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 1...'
+2025-11-22 21:47:54,085 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:54,085 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:54,085 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:54,085 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:54,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:54,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:54,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:54,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:54,108 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 7ms
+2025-11-22 21:47:54,108 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 7ms
+2025-11-22 21:47:54,108 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 7ms
+2025-11-22 21:47:54,108 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 7ms
+2025-11-22 21:47:59,116 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 2...'
+2025-11-22 21:47:59,116 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 2...'
+2025-11-22 21:47:59,116 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 2...'
+2025-11-22 21:47:59,116 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 2...'
+2025-11-22 21:47:59,119 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:59,119 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:59,119 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:59,119 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:47:59,133 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:59,133 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:59,133 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:59,133 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:47:59,162 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 28ms
+2025-11-22 21:47:59,162 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 28ms
+2025-11-22 21:47:59,162 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 28ms
+2025-11-22 21:47:59,162 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 28ms
+2025-11-22 21:48:10,085 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 3...'
+2025-11-22 21:48:10,085 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 3...'
+2025-11-22 21:48:10,085 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 3...'
+2025-11-22 21:48:10,085 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 3...'
+2025-11-22 21:48:10,087 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:10,087 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:10,087 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:10,087 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:10,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:10,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:10,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:10,090 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:10,123 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 2ms
+2025-11-22 21:48:10,123 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 2ms
+2025-11-22 21:48:10,123 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 2ms
+2025-11-22 21:48:10,123 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 2ms
+2025-11-22 21:48:12,741 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 4...'
+2025-11-22 21:48:12,741 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 4...'
+2025-11-22 21:48:12,741 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 4...'
+2025-11-22 21:48:12,741 - API_ROUTE_GENERATE - INFO - Request received | Provider: mock | Prompt: 'generate 4...'
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client received request. Simulating latency.
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:12,743 - CLIENT.MOCK - INFO - MOCK client finished generation.
+2025-11-22 21:48:12,761 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 3ms
+2025-11-22 21:48:12,761 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 3ms
+2025-11-22 21:48:12,761 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 3ms
+2025-11-22 21:48:12,761 - API_ROUTE_GENERATE - WARNING - Successful generation | Provider: mock | Response length: 57 | Duration: 3ms
+2025-11-22 21:48:21,795 - API_ROUTE_GENERATE - INFO - Retrieved 2 log entries for admin history.
+2025-11-22 21:48:21,795 - API_ROUTE_GENERATE - INFO - Retrieved 2 log entries for admin history.
+2025-11-22 21:48:21,795 - API_ROUTE_GENERATE - INFO - Retrieved 2 log entries for admin history.
+2025-11-22 21:48:21,795 - API_ROUTE_GENERATE - INFO - Retrieved 2 log entries for admin history.
+2025-11-22 21:48:37,652 - API_ROUTE_GENERATE - INFO - Retrieved 2 prompt records.
+2025-11-22 21:48:37,652 - API_ROUTE_GENERATE - INFO - Retrieved 2 prompt records.
+2025-11-22 21:48:37,652 - API_ROUTE_GENERATE - INFO - Retrieved 2 prompt records.
+2025-11-22 21:48:37,652 - API_ROUTE_GENERATE - INFO - Retrieved 2 prompt records.

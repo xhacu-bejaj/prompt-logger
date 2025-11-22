@@ -1,52 +1,105 @@
 import logging
-import sys
-from app.services.database import retrieve_log_entries # Import the new retrieval function
-from app.services.SQLiteHandler import SQLiteHandler 
-from app.core.settings import settings
+import sqlite3
+from logging.handlers import RotatingFileHandler
+from typing import Dict, Any, List
 
-# --- Logger Setup ---
+from app.core.settings import settings # Import the settings
+from app.services.database import get_db_connection
+
+# --- Custom Database Handler ---
+
+class SQLiteHandler(logging.Handler):
+    """A logging handler that writes records to an SQLite database."""
+
+    def __init__(self, db_path: str):
+        super().__init__()
+        self.db_path = db_path
+
+    def emit(self, record: logging.LogRecord):
+        # We only save WARNING, ERROR, CRITICAL to DB for important events
+        if record.levelno < logging.WARNING:
+            return
+
+        conn = None
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            
+            # Use the datetime when the log was created for accurate timing
+            cursor.execute(
+                """
+                INSERT INTO logs (
+                    timestamp, level, message, logger_name, 
+                    pathname, funcName, lineno
+                ) 
+                VALUES (
+                    ?, ?, ?, ?, ?, ?, ?
+                )
+                """,
+                (
+                    record.asctime, 
+                    record.levelname, 
+                    record.getMessage(),
+                    record.name,
+                    record.pathname,
+                    record.funcName,
+                    record.lineno
+                )
+            )
+            conn.commit()
+        except sqlite3.OperationalError as e:
+            # Important: Print to console if DB fails, as we cannot log to DB again
+            print(f"LOGGING FAILURE: Error saving log to database: {e}") 
+        finally:
+            if conn:
+                conn.close()
+
+# --- Public Interface ---
 
 def setup_logging():
-    """Configures the root logger with the SQLite Handler and console output."""
+    """Configures the root logger with Console, File, and DB handlers."""
     
-    logger = logging.getLogger()
-    logger.setLevel(settings.LOG_LEVEL) 
+    # 1. Define Log Format (same for console and file)
+    LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    formatter = logging.Formatter(LOG_FORMAT)
     
-    
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    )
+    # Configure logging for the application
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO)
 
-   
-    db_handler = SQLiteHandler()
-   
-    db_handler.setLevel(logging.WARNING) 
-    db_handler.setFormatter(formatter)
-    
-   
-    console_handler = logging.StreamHandler(sys.stdout)
+    # 2. Console Handler (for real-time feedback)
+    console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
-    console_handler.setLevel(settings.LOG_LEVEL)
+    root_logger.addHandler(console_handler)
+
+    # 3. File Handler (NEW)
+    # Use RotatingFileHandler to prevent the file from getting too large
+    file_handler = RotatingFileHandler(
+        settings.LOG_FILE_PATH,
+        maxBytes=1024 * 1024 * 5, # 5 MB per file
+        backupCount=2,           # Keep two backup files
+        encoding='utf-8'
+    )
+    file_handler.setFormatter(formatter)
+    root_logger.addHandler(file_handler)
     
-   
-    if not logger.handlers: 
-        logger.addHandler(db_handler)
-        logger.addHandler(console_handler)
+    # 4. Database Handler (for important events and history)
+    db_handler = SQLiteHandler(settings.DB_PATH)
+    db_handler.setFormatter(formatter) # The format is needed to populate record.asctime
+    root_logger.addHandler(db_handler)
 
 def get_logger(name: str):
-    """Returns a specific logger instance."""
+    """Retrieves a logger instance for a specific module."""
     return logging.getLogger(name)
 
-# --- History Retrieval Utility ---
-
-def get_history(limit: int):
-    """
-    Fetches log entries from the database. This function acts as a wrapper 
-    around the database retrieval logic.
-    """
+def get_history(limit: int) -> List[Dict[str, Any]]:
+    """Fetches log history from the database (via logger service for decoupling)."""
+    # NOTE: Imports are inside function to avoid circular dependency
+    from app.services.database import retrieve_log_entries
+    
     try:
+        # Retrieve dictionary list from database
         return retrieve_log_entries(limit=limit)
     except Exception as e:
-        # Use the root logger to log database retrieval failures
-        logging.getLogger().error(f"Failed to retrieve log history from DB: {e}")
+        logging.getLogger("root").error(f"Failed to retrieve log history from DB: {e}", exc_info=True)
         return []

@@ -14,4 +14,5 @@ class Settings:
     LOG_LEVEL = os.getenv('LOG_LEVEL','INFO')
     GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY','')
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+    LOG_FILE_PATH = os.getenv('LOG_FILE_PATH', 'service.log')
 settings = Settings()
