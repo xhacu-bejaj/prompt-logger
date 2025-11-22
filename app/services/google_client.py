@@ -1,10 +1,13 @@
-
 from dataclasses import dataclass
 
 from google import genai
 from google.genai.types import GenerateContentConfig
 
-from config import settings
+from app.services.abstract_client import GenerativeAIClient
+from core import settings
+from app.models.schemas import GenerateResponse
+
+
 
 
 
@@ -12,7 +15,7 @@ global_settings = settings.Settings()
 
 
 @dataclass
-class LLM:
+class GoogleAIClient(GenerativeAIClient):
     model: str='gemini-2.5-flash'
     temperature: float=0.5
     #max_tokens: int=2000
@@ -24,8 +27,8 @@ class LLM:
         self.client = genai.Client(api_key=LLM_API_KEY)
         self.config = GenerateContentConfig(temperature=self.temperature)
 
-    def generate_llm_response(self, prompt):
+    def generate(self, prompt:str)->GenerateResponse:
         response = self.client.models.generate_content(model=self.model, contents=prompt, config=self.config)
         if response is None or response.text is None:
             raise ValueError("LLM did not respond, ask more kindly")
-        return f'Gemini response: {response.text}'
+        return GenerateResponse(response=f'Gemini: {response.text}')
