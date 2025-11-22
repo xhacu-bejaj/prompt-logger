@@ -1,0 +1,19 @@
+2025-11-22 08:33:39 - uvicorn.error - INFO - Will watch for changes in these directories: ['C:\\Users\\zhaku\\Documents\\prompt-logger']
+2025-11-22 08:33:39 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+2025-11-22 08:33:39 - uvicorn.error - INFO - Started reloader process [19404] using StatReload
+2025-11-22 08:33:41 - uvicorn.error - INFO - Started server process [5348]
+2025-11-22 08:33:41 - uvicorn.error - INFO - Waiting for application startup.
+2025-11-22 08:33:41 - uvicorn.error - INFO - Application startup complete.
+2025-11-22 08:33:55 - uvicorn.access - INFO - 127.0.0.1:51243 - "GET /docs HTTP/1.1" 200
+2025-11-22 08:33:56 - uvicorn.access - INFO - 127.0.0.1:51243 - "GET /openapi.json HTTP/1.1" 200
+2025-11-22 08:34:03 - uvicorn.access - INFO - 127.0.0.1:31579 - "GET /api/health HTTP/1.1" 200
+2025-11-22 08:34:05 - uvicorn.access - INFO - 127.0.0.1:31579 - "GET /api/health HTTP/1.1" 200
+2025-11-22 08:34:06 - uvicorn.access - INFO - 127.0.0.1:31579 - "GET /api/health HTTP/1.1" 200
+2025-11-22 08:34:28 - uvicorn.access - INFO - 127.0.0.1:14209 - "POST /api/generate HTTP/1.1" 200
+2025-11-22 08:34:35 - uvicorn.access - INFO - 127.0.0.1:5749 - "POST /api/generate HTTP/1.1" 200
+2025-11-22 08:34:49 - uvicorn.access - INFO - 127.0.0.1:33701 - "POST /api/generate HTTP/1.1" 200
+2025-11-22 08:35:36 - uvicorn.error - INFO - Shutting down
+2025-11-22 08:35:36 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-11-22 08:35:36 - uvicorn.error - INFO - Application shutdown complete.
+2025-11-22 08:35:36 - uvicorn.error - INFO - Finished server process [5348]
+2025-11-22 08:35:36 - uvicorn.error - INFO - Stopping reloader process [19404]

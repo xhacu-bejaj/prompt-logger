@@ -1,9 +1,23 @@
+import json
+from pathlib import Path
+
 from fastapi import FastAPI
+import uvicorn
 
 from app.api.routes import router
 ## Set up sqlite db and save the logs there
 # add async
 # the log endpoint should have INFO and ERRORS, the others meh
+
+
+LOG_CONFIG_PATH = Path(__file__).parent / "log_config.json"
+try:
+    with open(LOG_CONFIG_PATH, "r") as f:
+        LOG_CONFIG = json.load(f)
+except FileNotFoundError:
+    print(f"Error: Logging config file not found at {LOG_CONFIG_PATH}. Using default Uvicorn logging.")
+    # Fallback to Uvicorn's internal configuration if file is missing
+    from uvicorn.config import LOGGING_CONFIG as LOG_CONFIG
 
 app = FastAPI(
     title="Student Prompt Logger",
@@ -13,11 +27,15 @@ app = FastAPI(
 app.include_router(router)
 
 def main():
-    # See if you can make the user select the client from OpenAI
    
-    # put each file in the correct folder/package
-    print("API starting...")
-    pass
+   print("Application is starting...")
+   uvicorn.run(
+        "main:app",
+        host="127.0.0.1",
+        port=8080,
+        reload=True,
+        log_config=LOG_CONFIG  
+    )
 
 
 if __name__ == "__main__":
