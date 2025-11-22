@@ -1,7 +1,9 @@
 import os
 import logging
 
-logger = logging.getLogger(__name__)
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+logger = logging.getLogger("uvicorn.error")
 
 try:
     from dotenv import load_dotenv
@@ -15,4 +17,5 @@ class Settings:
     LOG_LEVEL = os.getenv('LOG_LEVEL','INFO')
     GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY','')
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+    #model_config = SettingsConfigDict()
 settings = Settings()

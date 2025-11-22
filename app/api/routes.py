@@ -36,7 +36,7 @@ def generate(
         acc_logger.info(
             f"Successfully generated response. {provider} {prompt} {response}"
         )
-        return GenerateResponse(response=response)
+        return response
     except Exception as e:
         err_logger.exception(
             f"FATAL error during generation. {provider} {prompt} DETAIL:{e}"

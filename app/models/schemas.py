@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 
 from pydantic import BaseModel
-
+#%(provider)s %(prompt)s %(response)s
 from app.services.client_factory import Provider
 
 class GenerateResponse(BaseModel):

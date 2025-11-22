@@ -7,5 +7,5 @@ from app.models.schemas import GenerateResponse
 @dataclass
 class MockClient(GenerativeAIClient):
     def generate(self, prompt: str, **kwargs) -> GenerateResponse:
-        self.prompt = prompt # save it so i can access it after generating
-        return GenerateResponse(response=f'MockLLM: {prompt}')
+        self.prompt = prompt 
+        return GenerateResponse(response=prompt)
