@@ -41,8 +41,8 @@ Clone the repository and create a Python virtual environment to manage dependenc
 python -m venv .venv
 source .venv/bin/activate    # macOS/Linux
 # .venv\Scripts\activate     # Windows Command Prompt
-'''
-2. Install Dependencies
+
+# # 2. Install Dependencies
 Install the required Python packages:
 
 # (Optional) Generate the requirements file from your virtual environment
@@ -104,17 +104,19 @@ docker logs -f prompt-logger-instance
 API Endpoints
 The core API is served on port 8080. You can access the auto-generated Swagger/OpenAPI documentation at http://localhost:8080/docs.
 
-Method,Endpoint,Description
-GET,/api/health,Verifies that the server is running.
-Response,"{""status"": ""ok""}"
+| Method | Endpoint | Description | Response Example |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/health` | Verifies that the server is running. | `{"status": "ok"}` |
 
 
-Method,Endpoint,Description
-POST,/api/generate,The main endpoint for requesting LLM content.
+| Method | Endpoint | Description |
+| :--- | :--- | :--- | 
+| POST | /api/generate | The main endpoint for requesting LLM content |
 
-Parameter,Type,Description,Example
-user_prompt,string,The query sent to the LLM.,"""Explain quantum physics simply."""
-provider,string,The LLM backend to use.,"""mock"" (or ""openai"", ""google"")"
+| Parameter | Type | Description | Example
+| :--- | :--- | :--- | :--- |
+| user_prompt | string | The query sent to the LLM | """Explain quantum physics simply.""" |
+
 
 3. Admin: View System Logs
 Method,Endpoint,Description
