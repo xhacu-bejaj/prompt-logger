@@ -50,7 +50,7 @@ pip freeze > requirements.txt
 
 # Install dependencies
 pip install -r requirements.txt
-
+'''
 3. Configuration
 Create a file named .env in the root directory to manage your settings and sensitive API keys:
 
@@ -69,7 +69,7 @@ OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
 
 # General log level
 LOG_LEVEL=INFO
-
+'''
 4. Run Locally
 The application starts, and the required SQLite database tables are initialized automatically on startup.
 
