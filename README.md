@@ -28,6 +28,8 @@ You will need the following installed:
 * **git**
 * **(Recommended) Docker**
 
+--- 
+
 ### 1. Environment Setup
 
 Clone the repository and create a Python virtual environment to manage dependencies:
