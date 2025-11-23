@@ -44,22 +44,24 @@ python -m venv .venv
 source .venv/bin/activate    # macOS/Linux
 # .venv\Scripts\activate     # Windows Command Prompt
 
-'''
+```
 
 ---
 # # 2. Install Dependencies
 Install the required Python packages:
-
+```bash
 # (Optional) Generate the requirements file from your virtual environment
 pip freeze > requirements.txt
 
 # Install dependencies
 pip install -r requirements.txt
-'''
+
+```
 
 3. Configuration
 Create a file named .env in the root directory to manage your settings and sensitive API keys:
-'''
+
+```
 
 # .env file
 
@@ -76,12 +78,13 @@ OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
 
 # General log level
 LOG_LEVEL=INFO
-'''
+```
+
 
 4. Run Locally
 The application starts, and the required SQLite database tables are initialized automatically on startup.
-'''
 
+```bash
 uvicorn main:app --reload --host 127.0.0.1 --port 8080
 
 Docker Deployment
@@ -96,17 +99,21 @@ docker build -t prompt-logger-app:latest .
 Start the application in detached mode, mapping the host port 8080 to the container's internal port 8000:
 
 docker run -d --rm -p 8080:8000 --name prompt-logger-instance prompt-logger-app:latest
-'''
+
+```
+
 3. Verification
 Check the container status and stream the logs for verification:
-'''
+```bash
 # Check if the container is running
 docker ps
 
 # Stream the container logs
 docker logs -f prompt-logger-instance
 
-API Endpoints
+```
+
+# # API Endpoints
 The core API is served on port 8080. You can access the auto-generated Swagger/OpenAPI documentation at http://localhost:8080/docs.
 
 | Method | Endpoint | Description | Response Example |
