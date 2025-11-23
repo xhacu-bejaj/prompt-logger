@@ -51,8 +51,10 @@ pip freeze > requirements.txt
 # Install dependencies
 pip install -r requirements.txt
 '''
+
 3. Configuration
 Create a file named .env in the root directory to manage your settings and sensitive API keys:
+'''
 
 # .env file
 
@@ -70,8 +72,10 @@ OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
 # General log level
 LOG_LEVEL=INFO
 '''
+
 4. Run Locally
 The application starts, and the required SQLite database tables are initialized automatically on startup.
+'''
 
 uvicorn main:app --reload --host 127.0.0.1 --port 8080
 
@@ -87,10 +91,10 @@ docker build -t prompt-logger-app:latest .
 Start the application in detached mode, mapping the host port 8080 to the container's internal port 8000:
 
 docker run -d --rm -p 8080:8000 --name prompt-logger-instance prompt-logger-app:latest
-
+'''
 3. Verification
 Check the container status and stream the logs for verification:
-
+'''
 # Check if the container is running
 docker ps
 
@@ -136,4 +140,4 @@ Example of a successful prompt log entry: The log includes the full interaction 
   "latency_ms": 1250.78,
   "timestamp": "2023-11-23 11:43:06"
 }
-
+'''
