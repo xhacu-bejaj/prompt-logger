@@ -41,7 +41,7 @@ Clone the repository and create a Python virtual environment to manage dependenc
 python -m venv .venv
 source .venv/bin/activate    # macOS/Linux
 # .venv\Scripts\activate     # Windows Command Prompt
-
+'''
 2. Install Dependencies
 Install the required Python packages:
 
