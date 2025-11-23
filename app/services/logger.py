@@ -36,12 +36,10 @@ def get_logger(name: str):
     return logging.getLogger(name)
 
 def get_history(limit: int) -> List[Dict[str, Any]]:
-    """Fetches log history from the database (via logger service for decoupling)."""
-    # NOTE: Imports are inside function to avoid circular dependency
+    """Fetches log history from the database"""
     from app.services.database.database import retrieve_log_entries
     
     try:
-        # Retrieve dictionary list from database
         return retrieve_log_entries(limit=limit)
     except Exception as e:
         logging.getLogger("root").error(f"Failed to retrieve log history from DB: {e}", exc_info=True)
