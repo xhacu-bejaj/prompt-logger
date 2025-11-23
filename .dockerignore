@@ -6,3 +6,5 @@ promptlog.db
 .git
 .gitignore
 .vscode
+.env
+*.pyc
