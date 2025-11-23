@@ -1,39 +1,46 @@
 import logging
 from datetime import datetime
+import sqlite3
 
+from app.services.database import get_db_connection
 
 
 class SQLiteHandler(logging.Handler):
-
-    def __init__(self):
+    def __init__(self, db_path: str):
         super().__init__()
-        from app.services.database import get_db_connection
-        self._get_db_connection = get_db_connection
+        self.db_path = db_path
 
-    def emit(self, record):
+    def emit(self, record: logging.LogRecord):
+        if record.levelno < logging.WARNING:
+            return
+
         conn = None
         try:
-            conn = self._get_db_connection() 
+            conn = get_db_connection()
             cursor = conn.cursor()
-            timestamp = datetime.fromtimestamp(record.created).isoformat()
-            
-            insert_sql = """
-                INSERT INTO logs (timestamp, level, logger_name, message, pathname, funcName, lineno)
-                VALUES (?, ?, ?, ?, ?, ?, ?);
-            """
-            
-            cursor.execute(insert_sql, (
-                timestamp,
-                record.levelname,
-                record.name,
-                self.format(record),
-                record.pathname,
-                record.funcName,
-                record.lineno
-            ))
+    
+            cursor.execute(
+                """
+                INSERT INTO logs (
+                    timestamp, level, message, logger_name, 
+                    pathname, funcName, lineno
+                ) 
+                VALUES (
+                    ?, ?, ?, ?, ?, ?, ?
+                )
+                """,
+                (
+                    record.asctime, 
+                    record.levelname, 
+                    record.getMessage(),
+                    record.name,
+                    record.pathname,
+                    record.funcName,
+                    record.lineno
+                )
+            )
             conn.commit()
-            
-        except Exception as e:
+        except sqlite3.OperationalError as e:
             print(f"LOGGING FAILURE: Error saving log to database: {e}") 
         finally:
             if conn:

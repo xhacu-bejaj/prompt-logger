@@ -9,7 +9,7 @@ from app.services.logger import get_history, get_logger
 from app.services.database import insert_prompt_record, retrieve_prompt_records 
 
 router = APIRouter(prefix="/api")
-route_logger = get_logger("ROUTE_LOGGER") 
+route_logger = get_logger("ROUTE") 
 
 @router.get('/health')
 def health():
@@ -54,7 +54,7 @@ def generate(
         return response
     except Exception as e:
         # Log severe error
-        route_logger.error(f"LLM generation failed for prompt: '{prompt[:50]}...'. Error: {e}", exc_info=True)
+        route_logger.error(f"LLM generation failed for prompt: '{prompt}...'. Error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"LLM Generation Error: {e}")
 
 @router.get(
@@ -85,6 +85,7 @@ def get_prompt_records(
     
     records_dict = retrieve_prompt_records(limit=lines)
     records_pydantic = [PromptRecord(**record) for record in records_dict]
+    
     route_logger.info(f"Retrieved {len(records_pydantic)} prompt records.")
     
     return records_pydantic
