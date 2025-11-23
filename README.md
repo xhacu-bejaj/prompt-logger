@@ -136,22 +136,27 @@ The core API is served on port 8080. You can access the auto-generated Swagger/O
 | user_prompt | string | The query sent to the LLM | """Explain quantum physics simply.""" |
 
 
-3. Admin: View System Logs
-Method,Endpoint,Description
-GET,/api/admin/history,Retrieves the most recent system log entries (WARNING level and above) from the logs database table.
+### 3. Admin: View System Logs
+| Method | Endpoint | Description |
+| :--- | :--- | :--- | 
+| GET | /api/admin/history | Retrieves the most recent system log entries (WARNING level and above) from the logs database table. |
 
-Query Parameter,Type,Description
-lines,integer (max 10),Number of log entries to retrieve.
+| Query Parameter | Type | Description |
+| :--- | :--- | :--- |
+| lines | integer (max 10) | Number of log entries to retrieve.|
 
-4. Admin: View Prompt History
-Method,Endpoint,Description
-GET,/api/admin/prompts,Retrieves the most recent full prompt and response records from the prompts_and_responses database table.
+### 4. Admin: View Prompt History
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| GET | /api/admin/prompts | Retrieves the most recent full prompt and response records from the prompts_and_responses database table. |
 
-Query Parameter,Type,Description
-lines,integer (max 10),Number of records to retrieve.
+| Query Parameter | Type | Description |
+| :--- | :--- | :--- |
+| lines | integer (max 10) | Number of records to retrieve. |
 
 Example of a successful prompt log entry: The log includes the full interaction for complete auditability.
 
+```json
 {
   "id": 1,
   "user_prompt": "Explain quantum physics simply.",
@@ -160,4 +165,4 @@ Example of a successful prompt log entry: The log includes the full interaction 
   "latency_ms": 1250.78,
   "timestamp": "2023-11-23 11:43:06"
 }
-'''
+```
