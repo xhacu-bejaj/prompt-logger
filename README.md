@@ -47,7 +47,7 @@ source .venv/bin/activate    # macOS/Linux
 ```
 
 ---
-# # 2. Install Dependencies
+### 2. Install Dependencies
 Install the required Python packages:
 ```bash
 # (Optional) Generate the requirements file from your virtual environment
@@ -58,10 +58,10 @@ pip install -r requirements.txt
 
 ```
 
-3. Configuration
+### 3. Configuration
 Create a file named .env in the root directory to manage your settings and sensitive API keys:
 
-```
+```bash
 
 # .env file
 
@@ -81,7 +81,7 @@ LOG_LEVEL=INFO
 ```
 
 
-4. Run Locally
+### 4. Run Locally
 The application starts, and the required SQLite database tables are initialized automatically on startup.
 
 ```bash
@@ -89,21 +89,24 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8080
 
 Docker Deployment
 Use the provided Dockerfile to create a self-contained image ready for any environment.
-
-1. Build the Image
+```
+### 1. Build the Image
 Run the build command from the root directory:
-
+```bash
 docker build -t prompt-logger-app:latest .
-
-2. Run the Container
+```
+### 2. Run the Container
 Start the application in detached mode, mapping the host port 8080 to the container's internal port 8000:
 
+```bash
 docker run -d --rm -p 8080:8000 --name prompt-logger-instance prompt-logger-app:latest
 
 ```
 
-3. Verification
+
+### 3. Verification
 Check the container status and stream the logs for verification:
+
 ```bash
 # Check if the container is running
 docker ps
@@ -113,8 +116,11 @@ docker logs -f prompt-logger-instance
 
 ```
 
-# # API Endpoints
+## API Endpoints
+
 The core API is served on port 8080. You can access the auto-generated Swagger/OpenAPI documentation at http://localhost:8080/docs.
+
+
 
 | Method | Endpoint | Description | Response Example |
 | :--- | :--- | :--- | :--- |
