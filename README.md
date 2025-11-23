@@ -141,18 +141,13 @@ The core API is served on port 8080. You can access the auto-generated Swagger/O
 | :--- | :--- | :--- | 
 | GET | /api/admin/history | Retrieves the most recent system log entries (WARNING level and above) from the logs database table. |
 
-| Query Parameter | Type | Description |
-| :--- | :--- | :--- |
-| lines | integer (max 10) | Number of log entries to retrieve.|
+
 
 ### 4. Admin: View Prompt History
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | GET | /api/admin/prompts | Retrieves the most recent full prompt and response records from the prompts_and_responses database table. |
 
-| Query Parameter | Type | Description |
-| :--- | :--- | :--- |
-| lines | integer (max 10) | Number of records to retrieve. |
 
 Example of a successful prompt log entry: The log includes the full interaction for complete auditability.
 
