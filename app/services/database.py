@@ -4,9 +4,7 @@ from app.core.settings import settings
 
 DB_PATH = settings.DB_PATH
 
-# 1. New table creation function
 def create_prompt_record_table(conn: sqlite3.Connection):
-    """Creates the table to store the actual prompt and response data."""
     cursor = conn.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS prompts_and_responses (
@@ -20,9 +18,7 @@ def create_prompt_record_table(conn: sqlite3.Connection):
     """)
     conn.commit()
 
-# Existing function modified to call the new table creation
 def create_log_table():
-    """Ensures the log and prompt record tables are created."""
     conn = get_db_connection()
     
     # 1. Create the system log table (existing logic)
@@ -39,26 +35,22 @@ def create_log_table():
         )
     """)
     
-    # 2. Create the new prompt record table
     create_prompt_record_table(conn)
     
     conn.commit()
     conn.close()
 
 def get_db_connection() -> sqlite3.Connection:
-    """Creates and returns a database connection object."""
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # This allows accessing columns by name
+    conn.row_factory = sqlite3.Row
     return conn
 
-# 2. New insertion function
 def insert_prompt_record(
     provider: str, 
     user_prompt: str, 
     llm_response: str, 
     duration_ms: Optional[int] = None
 ):
-    """Inserts a new prompt and response record into the database."""
     conn = get_db_connection()
     try:
         cursor = conn.cursor()
@@ -81,24 +73,19 @@ def insert_prompt_record(
         conn.close()
 
 def retrieve_log_entries(limit: int) -> List[Dict[str, Any]]:
-    """Retrieves the most recent log entries from the database."""
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # We still retrieve from the 'logs' table
     cursor.execute(
         "SELECT timestamp, level, message, logger_name, pathname, funcName, lineno FROM logs ORDER BY timestamp DESC LIMIT ?", 
         (limit,)
     )
     
-    # Convert Row objects to dictionaries
     entries = [dict(row) for row in cursor.fetchall()]
     conn.close()
     return entries
 
-# 3. New retrieval function for prompt history (for future admin endpoint)
 def retrieve_prompt_records(limit: int) -> List[Dict[str, Any]]:
-    """Retrieves the most recent prompt and response records."""
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(

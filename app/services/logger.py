@@ -3,20 +3,17 @@ import sqlite3
 from logging.handlers import RotatingFileHandler
 from typing import Dict, Any, List
 
-from app.core.settings import settings # Import the settings
+from app.core.settings import settings 
 from app.services.database import get_db_connection
 
-# --- Custom Database Handler ---
 
 class SQLiteHandler(logging.Handler):
-    """A logging handler that writes records to an SQLite database."""
 
     def __init__(self, db_path: str):
         super().__init__()
         self.db_path = db_path
 
     def emit(self, record: logging.LogRecord):
-        # We only save WARNING, ERROR, CRITICAL to DB for important events
         if record.levelno < logging.WARNING:
             return
 
@@ -24,8 +21,7 @@ class SQLiteHandler(logging.Handler):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            
-            # Use the datetime when the log was created for accurate timing
+    
             cursor.execute(
                 """
                 INSERT INTO logs (
@@ -48,32 +44,23 @@ class SQLiteHandler(logging.Handler):
             )
             conn.commit()
         except sqlite3.OperationalError as e:
-            # Important: Print to console if DB fails, as we cannot log to DB again
             print(f"LOGGING FAILURE: Error saving log to database: {e}") 
         finally:
             if conn:
                 conn.close()
 
-# --- Public Interface ---
-
 def setup_logging():
-    """Configures the root logger with Console, File, and DB handlers."""
     
-    # 1. Define Log Format (same for console and file)
     LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     formatter = logging.Formatter(LOG_FORMAT)
     
-    # Configure logging for the application
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
 
-    # 2. Console Handler (for real-time feedback)
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
     root_logger.addHandler(console_handler)
 
-    # 3. File Handler (NEW)
-    # Use RotatingFileHandler to prevent the file from getting too large
     file_handler = RotatingFileHandler(
         settings.LOG_FILE_PATH,
         maxBytes=1024 * 1024 * 5, # 5 MB per file

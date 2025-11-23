@@ -1,4 +1,3 @@
-import os
 from dataclasses import dataclass
 import logging
 
@@ -9,7 +8,7 @@ from app.models.schemas import GenerateResponse
 from core import settings
 
 global_settings = settings.Settings()
-openai_logger = logging.getLogger("CLIENT.OPENAI")
+openai_logger = logging.getLogger("OPENAI")
 
 @dataclass
 class OpenAIClient(GenerativeAIClient):
@@ -26,18 +25,14 @@ class OpenAIClient(GenerativeAIClient):
       self.client = OpenAI(api_key=OPENAI_API_KEY)
       openai_logger.info(f"OpenAIClient initialized with model: {self.model}")
 
-
-
-  def generate(self, prompt: str, **kwargs) -> GenerateResponse: # <--- Added **kwargs
-      """Call the chat completion API with basic retries and timing."""
-      openai_logger.info(f"Generating content using OpenAI client for prompt: '{prompt[:50]}...'")
+  def generate(self, prompt: str, **kwargs) -> GenerateResponse: 
+      openai_logger.info(f"Generating content using OpenAI client for prompt: '{prompt}...'")
       
-      # Use kwargs to override default settings (e.g., model, temp)
       call_params = {
           "model": self.model,
           "temperature": self.temperature,
           "max_tokens": self.max_tokens,
-          **kwargs # Merge any additional parameters passed in **kwargs
+          **kwargs
       }
 
       try:
@@ -52,12 +47,10 @@ class OpenAIClient(GenerativeAIClient):
           raise ValueError("Client 'Openai' failed to generate content") from e
           
       try:
-          # Check for a valid response and extract content
           message= response.choices[0].message
           content = message.content
           
           if not content:
-              # Content is None, often due to safety filter or max tokens
               openai_logger.warning("OpenAI returned a message with no content (may be filtered).")
               return GenerateResponse(response=None) 
           
