@@ -1,65 +1,61 @@
-Prompt Logger and Generative AI API
+# Prompt Logger and Generative AI API
 
-Overview
 
-This is a Python FastAPI microservice designed to serve as a standardized interface for various Generative AI models (Mock, Google Gemini, OpenAI). The application provides robust logging and persistence features, saving system events (logs) and prompt/response data into a local SQLite database and a file.
 
-Key Features
+## Overview
 
-Provider Abstraction: Easily switch between LLM providers (Mock, OpenAI, Google) via a single API endpoint.
+This is a **Python FastAPI microservice** that serves as a standardized, robust interface for various Generative AI models, including **Google Gemini**, **OpenAI**, and a **Mock** provider. It is designed with a focus on **observability** and **data persistence**, ensuring every system event and LLM interaction is logged and stored.
 
-Database Persistence: Uses SQLite to store:
+### Key Features
 
-System Logs: Critical events, errors, and warnings (logs table).
+* **Provider Abstraction:** Easily switch between different LLM backends (`mock`, `openai`, `google`) via a single API endpoint, simplifying multi-vendor strategies.
+* **Database Persistence (SQLite):**
+    * **System Logs:** Stores critical events, errors, and warnings in the `logs` table.
+    * **Prompt History:** Stores the full user prompt, LLM response, provider used, and latency in the `prompts_and_responses` table.
+* **File Logging:** All application activity is mirrored to a local `service.log` file for real-time monitoring.
+* **Containerized:** Includes a `Dockerfile` for easy, consistent, and portable deployment using Docker.
 
-Prompt History: The full user prompt, LLM response, provider, and latency (prompts_and_responses table).
+---
 
-File Logging: All application activity is mirrored to a service.log file.
+## Setup & Local Development
 
-Containerized: Includes a Dockerfile for easy, consistent deployment via Docker.
+### Prerequisites
 
-Setup & Local Development
+You will need the following installed:
 
-Prerequisites
+* **Python 3.10+**
+* **pip** (Python package installer)
+* **git**
+* **(Recommended) Docker**
 
-Python 3.10+
+### 1. Environment Setup
 
-pip (Python package installer)
+Clone the repository and create a Python virtual environment to manage dependencies:
 
-git
-
-(Optional, but highly recommended) Docker
-
-1. Environment Setup
-
-Clone the repository and set up your virtual environment:
-
+```bash
 # Clone the repository (if applicable)
 # git clone <repository-url>
 # cd prompt-logger
 
 # Create and activate the virtual environment
 python -m venv .venv
-source .venv/bin/activate  # macOS/Linux
-# .venv\Scripts\activate   # Windows Command Prompt
-
+source .venv/bin/activate    # macOS/Linux
+# .venv\Scripts\activate     # Windows Command Prompt
 
 2. Install Dependencies
+Install the required Python packages:
 
-Ensure your requirements.txt is up to date, then install:
-
-# Generate the requirements file from your virtual environment
+# (Optional) Generate the requirements file from your virtual environment
 pip freeze > requirements.txt
 
 # Install dependencies
 pip install -r requirements.txt
 
-
 3. Configuration
-
-Create a .env file in the root directory to manage settings and API keys.
+Create a file named .env in the root directory to manage your settings and sensitive API keys:
 
 # .env file
+
 # Database path (creates a file if it doesn't exist)
 DB_PATH=promptlog.db 
 
@@ -68,43 +64,32 @@ LOG_FILE_PATH=service.log
 
 # API Keys for LLM Providers
 # If using 'mock', these are not required
-GOOGLE_API_KEY=""
-OPENAI_API_KEY=""
+GOOGLE_API_KEY="YOUR_GOOGLE_GEMINI_API_KEY"
+OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
 
 # General log level
 LOG_LEVEL=INFO
 
-
 4. Run Locally
-
-The application starts with database tables automatically initialized.
+The application starts, and the required SQLite database tables are initialized automatically on startup.
 
 uvicorn main:app --reload --host 127.0.0.1 --port 8080
 
-
-The application will be accessible at http://127.0.0.1:8080.
-
 Docker Deployment
-
-The provided Dockerfile creates an efficient, self-contained image ready for any environment.
+Use the provided Dockerfile to create a self-contained image ready for any environment.
 
 1. Build the Image
-
 Run the build command from the root directory:
 
 docker build -t prompt-logger-app:latest .
 
-
 2. Run the Container
-
-Start the application in a detached mode, mapping the host port 8080 to the container port 8000.
+Start the application in detached mode, mapping the host port 8080 to the container's internal port 8000:
 
 docker run -d --rm -p 8080:8000 --name prompt-logger-instance prompt-logger-app:latest
 
-
 3. Verification
-
-Check the container status and logs:
+Check the container status and stream the logs for verification:
 
 # Check if the container is running
 docker ps
@@ -112,59 +97,43 @@ docker ps
 # Stream the container logs
 docker logs -f prompt-logger-instance
 
-
 API Endpoints
+The core API is served on port 8080. You can access the auto-generated Swagger/OpenAPI documentation at http://localhost:8080/docs.
 
-The core API runs on port 8080 (or your configured port). You can access the auto-generated documentation at http://localhost:8080/docs.
+Method,Endpoint,Description
+GET,/api/health,Verifies that the server is running.
+Response,"{""status"": ""ok""}"
 
-1. Health Check
 
-GET /api/health
-Verifies that the server is running.
+Method,Endpoint,Description
+POST,/api/generate,The main endpoint for requesting LLM content.
 
-Response: {"status": "ok"}
-
-2. Generate Content
-
-POST /api/generate
-The main endpoint for requesting LLM content.
-
-Parameter
-
-Type
-
-Description
-
-Example
-
-user_prompt
-
-string
-
-The query sent to the LLM.
-
-"Explain quantum physics simply."
-
-provider
-
-string
-
-The LLM backend to use.
-
-"mock" (or "openai", "google")
+Parameter,Type,Description,Example
+user_prompt,string,The query sent to the LLM.,"""Explain quantum physics simply."""
+provider,string,The LLM backend to use.,"""mock"" (or ""openai"", ""google"")"
 
 3. Admin: View System Logs
+Method,Endpoint,Description
+GET,/api/admin/history,Retrieves the most recent system log entries (WARNING level and above) from the logs database table.
 
-GET /api/admin/history
-Retrieves the most recent system log entries (WARNING level and above) from the logs database table.
-
-Query Parameter: lines (integer, max 10) - Number of entries to retrieve.
+Query Parameter,Type,Description
+lines,integer (max 10),Number of log entries to retrieve.
 
 4. Admin: View Prompt History
+Method,Endpoint,Description
+GET,/api/admin/prompts,Retrieves the most recent full prompt and response records from the prompts_and_responses database table.
 
-GET /api/admin/prompts
-Retrieves the most recent full prompt and response records from the prompts_and_responses database table.
+Query Parameter,Type,Description
+lines,integer (max 10),Number of records to retrieve.
 
-Query Parameter: lines (integer, max 10) - Number of entries to retrieve.
+Example of a successful prompt log entry: The log includes the full interaction for complete auditability.
 
-Example of a successful prompt log entry accessed via /api/admin/prompts.
+{
+  "id": 1,
+  "user_prompt": "Explain quantum physics simply.",
+  "llm_response": "Quantum physics studies the tiny world of atoms and subatomic particles, where rules like position and speed are fuzzy and often described by probability.",
+  "provider": "google",
+  "latency_ms": 1250.78,
+  "timestamp": "2023-11-23 11:43:06"
+}
+
