@@ -15,11 +15,14 @@ class GenerativeAIClientFactory:
         if provider == Provider.OPENAI:
             from app.services.openai_client import OpenAIClient
             return OpenAIClient()
+        
         elif provider == Provider.GOOGLE:
             from app.services.google_client import GoogleAIClient
             return GoogleAIClient()
+        
         elif provider == Provider.MOCK:
             from app.services.mock_client import MockClient
             return MockClient()
+        
         else:
             raise ValueError("Client not supported")

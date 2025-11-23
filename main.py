@@ -3,9 +3,9 @@ from fastapi import FastAPI
 import uvicorn
 
 from app.services.logger import setup_logging
-from app.services import database 
+from app.services.database import database 
 from app.api.routes import router
-from app.services.database import create_log_table 
+from app.services.database.database import create_log_table 
 
 
 setup_logging() 

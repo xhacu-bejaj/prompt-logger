@@ -1,7 +1,5 @@
 import os
 
-from pydantic_settings import BaseSettings
-
 try:
     from dotenv import load_dotenv
     load_dotenv()

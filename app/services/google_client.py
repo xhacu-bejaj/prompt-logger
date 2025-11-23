@@ -19,6 +19,8 @@ class GoogleAIClient(GenerativeAIClient):
     model: str='gemini-2.5-flash'
     temperature: float=0.5
     max_output_tokens: int=2000
+    SYSTEM_GUARDRAIL: str = "You are a helpful, ethical, and safe assistant. You must refuse requests that promote illegal acts, hate speech, or explicit content. Respond only to appropriate topics."
+
 
     def __post_init__(self):
         try:
@@ -26,6 +28,11 @@ class GoogleAIClient(GenerativeAIClient):
         except Exception as e:
             google_logger.error("GOOGLE_API_KEY is not set in the environment")
             raise ValueError("GOOGLE_API_KEY is not set in the environment")
+        
+        if not GOOGLE_API_KEY:
+            google_logger.error("GOOGLE_API_KEY is missing or empty.")
+            raise ValueError("GOOGLE_API_KEY is missing or empty.")
+        
         self.client = genai.Client(api_key=GOOGLE_API_KEY)
         self.config = GenerateContentConfig()
         google_logger.info(f"GoogleAIClient initialized with model: {self.model}")
@@ -36,6 +43,7 @@ class GoogleAIClient(GenerativeAIClient):
         config_params = {
             "temperature": self.temperature,
             "max_output_tokens": self.max_output_tokens,
+            "system_instruction": self.SYSTEM_GUARDRAIL, 
         }
         
         config_params.update(kwargs)

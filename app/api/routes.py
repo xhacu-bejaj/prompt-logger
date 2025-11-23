@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Query
 from app.models.schemas import GenerateResponse, Log, PromptRecord, Request
 from app.services.client_factory import GenerativeAIClientFactory,Provider
 from app.services.logger import get_history, get_logger
-from app.services.database import insert_prompt_record, retrieve_prompt_records 
+from app.services.database.database import insert_prompt_record, retrieve_prompt_records 
 
 router = APIRouter(prefix="/api")
 route_logger = get_logger("ROUTE") 
@@ -20,17 +20,17 @@ def health():
 def generate(
     request:Request
     ):
-    provider_str = request.provider 
+    provider = request.provider 
     prompt = request.user_prompt
     
-    route_logger.info(f"Request received | Provider: {provider_str} | Prompt: '{prompt}'")
+    route_logger.info(f"Request received | Provider: {provider} | Prompt: '{prompt}'")
     
     try:
-        provider_enum = Provider(provider_str)
+        provider_enum = Provider(provider)
         client = GenerativeAIClientFactory().create_client(provider_enum)
     except ValueError as e:
-        route_logger.warning(f"Client creation failed for provider {provider_str}. Error: {e}", exc_info=True)
-        raise HTTPException(status_code=400, detail=f"Invalid provider: {provider_str}. Must be one of 'mock', 'openai', or 'google'.")
+        route_logger.warning(f"Client creation failed for provider {provider}. Error: {e}", exc_info=True)
+        raise HTTPException(status_code=400, detail=f"Invalid provider: {provider}. Must be one of 'mock', 'openai', or 'google'.")
     
     start_time = time.time()
     try:
@@ -40,7 +40,7 @@ def generate(
     
         if response.response:
             insert_prompt_record(
-                provider=provider_str,
+                provider=provider,
                 user_prompt=prompt,
                 llm_response=response.response,
                 duration_ms=duration_ms
@@ -48,21 +48,14 @@ def generate(
             
         response_len = len(response.response) if response.response else 0
         route_logger.warning(
-            f"Successful generation | Provider: {provider_str} | Response length: {response_len} | Duration: {duration_ms}ms"
+            f"Successful generation | Provider: {provider} | Response length: {response_len} | Duration: {duration_ms}ms"
         )
-        
         return response
     except Exception as e:
-        # Log severe error
         route_logger.error(f"LLM generation failed for prompt: '{prompt}...'. Error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"LLM Generation Error: {e}")
 
-@router.get(
-    '/admin/history', 
-    response_model=List[Log], 
-    tags=["Admin"]
-    )
-
+@router.get('/admin/history', response_model=List[Log], tags=["Admin"])
 def get_log_history(
     lines: int = Query(5, ge=1, le=10, description="Number of log entries to retrieve, max=10")
     ) -> List[Log]: 
@@ -74,11 +67,7 @@ def get_log_history(
     
     return log_entries_pydantic
 
-@router.get(
-    '/admin/prompts',
-    response_model=List[PromptRecord],
-    tags=["Admin"]
-)
+@router.get('/admin/prompts', response_model=List[PromptRecord], tags=["Admin"])
 def get_prompt_records(
     lines: int = Query(5, ge=1, le=10, description="Number of prompt/response records to retrieve, max=10")
     ) -> List[PromptRecord]:

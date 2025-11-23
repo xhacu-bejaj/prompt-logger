@@ -4,8 +4,8 @@ from logging.handlers import RotatingFileHandler
 from typing import Dict, Any, List
 
 from app.core.settings import settings 
-from app.services.SQLiteHandler import SQLiteHandler
-from app.services.database import get_db_connection
+from app.services.database.SQLiteHandler import SQLiteHandler
+from app.services.database.database import get_db_connection
 
 
 def setup_logging():
@@ -38,7 +38,7 @@ def get_logger(name: str):
 def get_history(limit: int) -> List[Dict[str, Any]]:
     """Fetches log history from the database (via logger service for decoupling)."""
     # NOTE: Imports are inside function to avoid circular dependency
-    from app.services.database import retrieve_log_entries
+    from app.services.database.database import retrieve_log_entries
     
     try:
         # Retrieve dictionary list from database
