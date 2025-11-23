@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 import sqlite3
 
-from app.services.database import get_db_connection
+from app.services.database.database import get_db_connection
 
 
 class SQLiteHandler(logging.Handler):
@@ -25,9 +25,7 @@ class SQLiteHandler(logging.Handler):
                     timestamp, level, message, logger_name, 
                     pathname, funcName, lineno
                 ) 
-                VALUES (
-                    ?, ?, ?, ?, ?, ?, ?
-                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     record.asctime, 
