@@ -501,3 +501,4 @@
 2025-11-23 11:40:04,609 - GOOGLE - INFO - Google client successfully generated content.
 2025-11-23 11:40:04,616 - ROUTE - WARNING - Successful generation | Provider: google | Response length: 867 | Duration: 2102ms
 2025-11-23 11:40:04,616 - ROUTE - WARNING - Successful generation | Provider: google | Response length: 867 | Duration: 2102ms
+2025-11-23 12:29:27,033 - MAIN - INFO - Application starting up...
