@@ -587,3 +587,119 @@
 2025-11-25 11:58:20,968 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 2025-11-25 11:58:20,993 - OPENAI - INFO - OpenAI client successfully generated content.
 2025-11-25 11:58:20,996 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 25 | Duration: 2632ms
+2025-11-25 12:02:32,047 - root - ERROR - Failed to retrieve log history from DB: no such table: logs
+Traceback (most recent call last):
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\logger.py", line 43, in get_history
+    return retrieve_log_entries(limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\database\database.py", line 77, in retrieve_log_entries
+    cursor.execute(
+sqlite3.OperationalError: no such table: logs
+2025-11-25 12:02:32,050 - ROUTE - INFO - Retrieved 0 log entries for admin history.
+2025-11-25 12:03:08,296 - ROUTE - INFO - Request received | Provider: google | Prompt: 'Say hello'
+2025-11-25 12:03:10,103 - GOOGLE - INFO - GoogleAIClient initialized with model: gemini-2.5-flash
+2025-11-25 12:03:10,104 - GOOGLE - INFO - Generating content using Google client for prompt: 'Say hello...'
+2025-11-25 12:03:10,105 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-25 12:03:10,940 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-25 12:03:10,944 - GOOGLE - INFO - Google client successfully generated content.
+2025-11-25 12:03:10,947 - ROUTE - WARNING - Successful generation | Provider: google | Response length: 6 | Duration: 841ms
+2025-11-25 12:03:18,214 - ROUTE - INFO - Request received | Provider: openai | Prompt: 'Say hello'
+2025-11-25 12:03:18,769 - OPENAI - INFO - OpenAIClient initialized with model: gpt-4o-mini
+2025-11-25 12:03:18,770 - OPENAI - INFO - Generating content using OpenAI client for prompt: 'Say hello...'
+2025-11-25 12:03:19,979 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-25 12:03:19,985 - OPENAI - INFO - OpenAI client successfully generated content.
+2025-11-25 12:03:19,987 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 34 | Duration: 1215ms
+2025-11-25 12:03:25,688 - root - ERROR - Failed to retrieve log history from DB: no such table: logs
+Traceback (most recent call last):
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\logger.py", line 43, in get_history
+    return retrieve_log_entries(limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\database\database.py", line 77, in retrieve_log_entries
+    cursor.execute(
+sqlite3.OperationalError: no such table: logs
+2025-11-25 12:03:25,697 - ROUTE - INFO - Retrieved 0 log entries for admin history.
+2025-11-25 12:03:40,818 - root - ERROR - Failed to retrieve log history from DB: no such table: logs
+Traceback (most recent call last):
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\logger.py", line 43, in get_history
+    return retrieve_log_entries(limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\database\database.py", line 77, in retrieve_log_entries
+    cursor.execute(
+sqlite3.OperationalError: no such table: logs
+2025-11-25 12:03:40,820 - ROUTE - INFO - Retrieved 0 log entries for admin history.
+2025-11-25 12:03:58,255 - root - ERROR - Failed to retrieve log history from DB: no such table: logs
+Traceback (most recent call last):
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\logger.py", line 43, in get_history
+    return retrieve_log_entries(limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\database\database.py", line 77, in retrieve_log_entries
+    cursor.execute(
+sqlite3.OperationalError: no such table: logs
+2025-11-25 12:03:58,264 - ROUTE - INFO - Retrieved 0 log entries for admin history.
+2025-11-25 12:05:23,207 - ROUTE - INFO - Request received | Provider: mock | Prompt: 'Say hello'
+2025-11-25 12:05:23,210 - MOCK - INFO - MOCK client received request.
+2025-11-25 12:05:23,210 - MOCK - INFO - MOCK client finished generation.
+2025-11-25 12:05:23,211 - ROUTE - WARNING - Successful generation | Provider: mock | Response length: 56 | Duration: 0ms
+2025-11-25 12:05:29,173 - root - ERROR - Failed to retrieve log history from DB: no such table: logs
+Traceback (most recent call last):
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\logger.py", line 43, in get_history
+    return retrieve_log_entries(limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ced\Documents\student_prompt_logger\app\services\database\database.py", line 77, in retrieve_log_entries
+    cursor.execute(
+sqlite3.OperationalError: no such table: logs
+2025-11-25 12:05:29,176 - ROUTE - INFO - Retrieved 0 log entries for admin history.
+2025-11-25 12:06:17,226 - MAIN - INFO - Application starting up...
+2025-11-25 12:06:51,316 - ROUTE - INFO - Request received | Provider: mock | Prompt: 'Say hello'
+2025-11-25 12:06:51,319 - MOCK - INFO - MOCK client received request.
+2025-11-25 12:06:51,321 - MOCK - INFO - MOCK client finished generation.
+2025-11-25 12:06:51,323 - ROUTE - WARNING - Successful generation | Provider: mock | Response length: 56 | Duration: 2ms
+2025-11-25 12:07:11,710 - ROUTE - INFO - Request received | Provider: google | Prompt: 'Say hello'
+2025-11-25 12:07:13,635 - GOOGLE - INFO - GoogleAIClient initialized with model: gemini-2.5-flash
+2025-11-25 12:07:13,636 - GOOGLE - INFO - Generating content using Google client for prompt: 'Say hello...'
+2025-11-25 12:07:13,637 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-25 12:07:14,535 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-25 12:07:14,538 - GOOGLE - INFO - Google client successfully generated content.
+2025-11-25 12:07:14,540 - ROUTE - WARNING - Successful generation | Provider: google | Response length: 6 | Duration: 902ms
+2025-11-25 12:10:03,097 - MAIN - INFO - Application starting up...
+2025-11-25 12:10:05,255 - MAIN - INFO - Application starting up...
+2025-11-25 12:10:17,932 - MAIN - INFO - Application starting up...
+2025-11-25 12:11:44,234 - ROUTE - INFO - Request received | Provider: google | Prompt: 'Say hello'
+2025-11-25 12:11:46,183 - GOOGLE - INFO - GoogleAIClient initialized with model: gemini-2.5-flash
+2025-11-25 12:11:46,183 - GOOGLE - INFO - Generating content using Google client for prompt: 'Say hello...'
+2025-11-25 12:11:46,184 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-25 12:11:47,208 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-25 12:11:47,210 - GOOGLE - INFO - Google client successfully generated content.
+2025-11-25 12:11:47,211 - ROUTE - WARNING - Successful generation | Provider: google | Response length: 6 | Duration: 1026ms
+2025-11-25 12:14:03,286 - MAIN - INFO - Application starting up...
+2025-11-25 12:15:35,300 - MAIN - INFO - Application starting up...
+2025-11-25 12:15:59,733 - ROUTE - INFO - Request received | Provider: google | Prompt: 'Say hello'
+2025-11-25 12:16:01,631 - GOOGLE - INFO - GoogleAIClient initialized with model: gemini-2.5-flash
+2025-11-25 12:16:01,631 - GOOGLE - INFO - Generating content using Google client for prompt: 'Say hello...'
+2025-11-25 12:16:01,632 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-25 12:16:02,466 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-25 12:16:02,470 - GOOGLE - INFO - Google client successfully generated content.
+2025-11-25 12:16:02,484 - ROUTE - WARNING - Successful generation | Provider: google | Response length: 6 | Duration: 841ms
+2025-11-25 12:16:13,990 - ROUTE - INFO - Request received | Provider: openai | Prompt: 'Say hello'
+2025-11-25 12:16:15,439 - OPENAI - INFO - OpenAIClient initialized with model: gpt-4o-mini
+2025-11-25 12:16:15,440 - OPENAI - INFO - Generating content using OpenAI client for prompt: 'Say hello...'
+2025-11-25 12:16:17,333 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-25 12:16:17,344 - OPENAI - INFO - OpenAI client successfully generated content.
+2025-11-25 12:16:17,359 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 34 | Duration: 1905ms
+2025-11-25 12:16:30,211 - ROUTE - INFO - Retrieved 2 log entries for admin history.
+2025-11-25 12:16:35,997 - ROUTE - INFO - Retrieved 2 log entries for admin history.
+2025-11-25 12:16:39,357 - ROUTE - INFO - Retrieved 2 log entries for admin history.
+2025-11-25 12:16:46,991 - ROUTE - INFO - Retrieved 2 log entries for admin history.
+2025-11-25 12:17:56,056 - MAIN - INFO - Application starting up...
+2025-11-25 12:18:13,508 - ROUTE - INFO - Request received | Provider: openai | Prompt: 'Say hello'
+2025-11-25 12:18:15,061 - OPENAI - INFO - OpenAIClient initialized with model: gpt-4o-mini
+2025-11-25 12:18:15,062 - OPENAI - INFO - Generating content using OpenAI client for prompt: 'Say hello...'
+2025-11-25 12:18:16,873 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-25 12:18:16,899 - OPENAI - INFO - OpenAI client successfully generated content.
+2025-11-25 12:18:16,902 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 34 | Duration: 1840ms
+2025-11-25 12:18:27,378 - ROUTE - INFO - Request received | Provider: openai | Prompt: 'Say hello'
+2025-11-25 12:18:27,906 - OPENAI - INFO - OpenAIClient initialized with model: gpt-4o-mini
+2025-11-25 12:18:27,909 - OPENAI - INFO - Generating content using OpenAI client for prompt: 'Say hello...'
+2025-11-25 12:18:28,588 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-25 12:18:28,590 - OPENAI - INFO - OpenAI client successfully generated content.
+2025-11-25 12:18:28,592 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 34 | Duration: 681ms
