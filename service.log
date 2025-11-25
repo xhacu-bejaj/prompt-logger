@@ -703,3 +703,11 @@ sqlite3.OperationalError: no such table: logs
 2025-11-25 12:18:28,588 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 2025-11-25 12:18:28,590 - OPENAI - INFO - OpenAI client successfully generated content.
 2025-11-25 12:18:28,592 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 34 | Duration: 681ms
+2025-11-25 12:19:12,709 - MAIN - INFO - Application starting up...
+2025-11-25 12:19:31,835 - MAIN - INFO - Application starting up...
+2025-11-25 12:20:42,518 - ROUTE - INFO - Request received | Provider: openai | Prompt: 'Say hello'
+2025-11-25 12:20:44,109 - OPENAI - INFO - OpenAIClient initialized with model: gpt-4o-mini
+2025-11-25 12:20:44,110 - OPENAI - INFO - Generating content using OpenAI client for prompt: 'Say hello...'
+2025-11-25 12:20:45,367 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-25 12:20:45,384 - OPENAI - INFO - OpenAI client successfully generated content.
+2025-11-25 12:20:45,402 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 34 | Duration: 1276ms
