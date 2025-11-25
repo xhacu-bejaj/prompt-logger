@@ -4,3 +4,4 @@ __pycache__
 promptlog.db
 *.zip
 *.log
+service.log
