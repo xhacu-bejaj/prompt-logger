@@ -12,5 +12,6 @@ class Settings:
     GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY','')
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY','')
     LOG_FILE_PATH = os.getenv('LOG_FILE_PATH', 'service-history.log')
+    MONGODB_CONNECTION_STRING=os.getenv('MONGODB_CONNECTION_STRING','')
 
 settings = Settings()
