@@ -565,3 +565,25 @@
 2025-11-23 15:22:55,083 - ROUTE - INFO - Retrieved 1 prompt records.
 2025-11-23 15:22:56,770 - ROUTE - INFO - Retrieved 1 prompt records.
 2025-11-23 15:22:56,770 - ROUTE - INFO - Retrieved 1 prompt records.
+2025-11-25 11:54:53,180 - MAIN - INFO - Application starting up...
+2025-11-25 11:56:23,458 - ROUTE - INFO - Health check endpoint accessed.
+2025-11-25 11:56:25,248 - ROUTE - INFO - Health check endpoint accessed.
+2025-11-25 11:56:44,654 - ROUTE - INFO - Request received | Provider: mock | Prompt: 'Say hello to me'
+2025-11-25 11:56:44,660 - MOCK - INFO - MOCK client received request.
+2025-11-25 11:56:44,661 - MOCK - INFO - MOCK client finished generation.
+2025-11-25 11:56:44,663 - ROUTE - WARNING - Successful generation | Provider: mock | Response length: 62 | Duration: 1ms
+2025-11-25 11:56:54,158 - ROUTE - INFO - Request received | Provider: google | Prompt: 'Say hello to me'
+2025-11-25 11:56:56,240 - GOOGLE - INFO - GoogleAIClient initialized with model: gemini-2.5-flash
+2025-11-25 11:56:56,241 - GOOGLE - INFO - Generating content using Google client for prompt: 'Say hello to me...'
+2025-11-25 11:56:56,242 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-25 11:56:56,759 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-25 11:56:56,762 - GOOGLE - INFO - Google client successfully generated content.
+2025-11-25 11:56:56,764 - ROUTE - WARNING - Successful generation | Provider: google | Response length: 12 | Duration: 521ms
+2025-11-25 11:57:02,745 - ROUTE - INFO - Request received | Provider: openai | Prompt: 'Say hello to me'
+2025-11-25 11:58:04,073 - MAIN - INFO - Application starting up...
+2025-11-25 11:58:16,822 - ROUTE - INFO - Request received | Provider: openai | Prompt: 'Say hello to me'
+2025-11-25 11:58:18,361 - OPENAI - INFO - OpenAIClient initialized with model: gpt-4o-mini
+2025-11-25 11:58:18,362 - OPENAI - INFO - Generating content using OpenAI client for prompt: 'Say hello to me...'
+2025-11-25 11:58:20,968 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-25 11:58:20,993 - OPENAI - INFO - OpenAI client successfully generated content.
+2025-11-25 11:58:20,996 - ROUTE - WARNING - Successful generation | Provider: openai | Response length: 25 | Duration: 2632ms
