@@ -7,7 +7,7 @@ from openai.types.chat import ChatCompletionMessageParam
 
 from app.services.abstract_client import GenerativeAIClient
 from app.models.schemas import GenerateResponse
-from core import settings
+from app.core import settings
 
 global_settings = settings.Settings()
 openai_logger = logging.getLogger("OPENAI")
