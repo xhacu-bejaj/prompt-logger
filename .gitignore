@@ -4,3 +4,6 @@ __pycache__
 promptlog.db
 *.zip
 *.log
+data.raw.json
+ssh-keys.txt
+ssh-keys.txt.pub

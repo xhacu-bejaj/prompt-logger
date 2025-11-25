@@ -8,7 +8,7 @@ def create_prompt_record_table(conn: sqlite3.Connection):
     cursor = conn.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS prompts_and_responses (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
             timestamp TEXT NOT NULL,
             provider TEXT NOT NULL,
             user_prompt TEXT NOT NULL,
