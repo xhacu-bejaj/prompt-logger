@@ -30,11 +30,11 @@ try:
     query = {"authors":"Modan Tailleur"}
     author = collection.find_one(query) 
     
-    for key in author.keys():
-        #pprint(f"key: {key}, value type: {type(author[key])}")
-        if (type(author[key]) is list):
-            for item in author[key]:
-                pprint(f"attribute = {key}; list entry: {item}; list of: {type(item)}")  
+    # for key in author.keys():
+    #     #pprint(f"key: {key}, value type: {type(author[key])}")
+    #     if (type(author[key]) is list):
+    #         for item in author[key]:
+    #             pprint(f"attribute = {key}; list entry: {item}; list of: {type(item)}")  
     print("#################")
     pprint(author)
     
