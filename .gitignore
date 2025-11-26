@@ -7,3 +7,4 @@ promptlog.db
 data.raw.json
 ssh-keys.txt
 ssh-keys.txt.pub
+*.csv

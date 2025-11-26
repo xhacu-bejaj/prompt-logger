@@ -1,6 +1,8 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Dict, List, Optional
 
+
+from bson.objectid import ObjectId
 from pydantic import BaseModel, Field
 
 
@@ -35,4 +37,19 @@ class PromptRecord(BaseModel):
     user_prompt: str
     llm_response: str
     duration_ms: Optional[int] = Field(default=None, description="Time taken for generation in milliseconds")
+
+class QueryResponse(BaseModel): # maybe big dict
+    _id: Optional[ObjectId] = None
+    id: Optional[str] = None
+    title: Optional[str] = None
+    article_abstract: Optional[str] = None
+    keywords: Optional[List[str]] = None
+    authors: Optional[List[str]] = None
+    venue: Optional[List[str]] = None
+    date: Optional[datetime] = None
+    teams: Optional[List[str]] = None
+
+    
+
+
     
