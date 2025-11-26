@@ -49,6 +49,14 @@ class QueryResponse(BaseModel): # maybe big dict
     date: Optional[datetime] = None
     teams: Optional[List[str]] = None
 
+
+class MongoRequest(BaseModel):
+    user_prompt: Dict[str, QueryResponse]
+    provider: str = Field(default='mock', description="The generative AI provider to use ('openai', 'google', 'mock').")
+
+    
+
+    
     
 
 

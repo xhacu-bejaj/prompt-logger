@@ -1,8 +1,11 @@
+from pprint import pprint
 from typing import Dict, List
 
 from fastapi import APIRouter, HTTPException, Query
+from pymongo import MongoClient
 
-from app.models.schemas import GenerateResponse, Log, PromptRecord, Request
+from app.core.settings import settings
+from app.models.schemas import GenerateResponse, Log, MongoRequest, PromptRecord, Request
 from app.models.schemas import QueryResponse
 from app.services.client_factory import GenerativeAIClientFactory,Provider
 from app.services.logger import get_history, get_logger
@@ -10,6 +13,8 @@ from app.services.database.database import insert_prompt_record, retrieve_prompt
 
 router = APIRouter(prefix="/api")
 route_logger = get_logger("ROUTE") 
+uri = settings.MONGODB_CONNECTION_STRING
+mongo_client = MongoClient(uri)
 
 @router.get('/health')
 def health():
@@ -76,11 +81,10 @@ def get_prompt_records(
     records_pydantic = [PromptRecord(**record) for record in records_dict]
     
     route_logger.info(f"Retrieved {len(records_pydantic)} prompt records.")
-    
     return records_pydantic
 
 @router.post('/query', response_model=Dict[str, QueryResponse]) #bad
-def generate_query(user_request:Request):
+def generate_query(user_request:MongoRequest):
     provider = user_request.provider 
     prompt = user_request.user_prompt
     
@@ -91,11 +95,20 @@ def generate_query(user_request:Request):
         raise HTTPException(status_code=400, detail=f"Invalid provider: {provider}. Must be one of 'mock', 'openai', or 'google'.")
     
     try:
-        response: QueryResponse = client.generate(prompt)
+        response_query: Dict[str, QueryResponse] = client.generate(prompt)
         #return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"LLM Generation Error: {e}")
     
     # Now send LLM response to mongodb
+    articles_db = mongo_client.get_database('articles_db')
+    articles_collection = articles_db.get_collection('articles')
+
+    db_answer = articles_collection.find_one(response_query)
+    #pprint(db_answer)
+
+    mongo_client.close() # for now
+    return db_answer
+
     
 

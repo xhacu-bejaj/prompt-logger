@@ -11,7 +11,7 @@ mock_logger = logging.getLogger("MOCK")
 @dataclass
 class MockClient(GenerativeAIClient):
     
-    def generate(self, prompt: QueryResponse, **kwargs) -> QueryResponse: 
+    def generate(self, prompt: Dict[str, QueryResponse], **kwargs) -> QueryResponse: 
         mock_logger.info("MOCK client received request.")
         
         # response = GenerateResponse(

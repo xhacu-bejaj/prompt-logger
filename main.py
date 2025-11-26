@@ -25,4 +25,4 @@ app.include_router(router)
 
 if __name__ == "__main__":
     logger.info("Starting Uvicorn server...")
-    uvicorn.run("main:app", host="127.0.0.1", port=8081, log_level="info", reload=True) 
+    uvicorn.run("main:app", host="127.0.0.1", port=8080, log_level="info", reload=True) 
