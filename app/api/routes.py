@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Query
 from pymongo import MongoClient
 
 from app.core.settings import settings
-from app.models.schemas import GenerateResponse, Log, MongoRequest, PromptRecord, Request
+from app.models.schemas import GeneralQuery, GenerateResponse, Log, MongoRequest, PromptRecord, Request
 from app.models.schemas import QueryResponse
 from app.services.client_factory import GenerativeAIClientFactory,Provider
 from app.services.logger import get_history, get_logger
@@ -103,6 +103,25 @@ def raw_query(raw_query:SearchParam):
     
     mongo_response = collection.find(query_document)
     results = mongo_response.to_list()
+    route_logger.info(f"mongo_response: {results}")
+    
+    return str(results)
+
+@router.post('/query_experimental') 
+def raw_query_experimental(raw_query:GeneralQuery):
+
+    db = mongo_client.get_database('articles_db')
+    collection = db.get_collection('articles')
+
+    query_filter = raw_query.filter
+    query_projection = raw_query.projection
+    
+    query_projection["_id"] = 0 # mongodb never returns document _id 
+    
+    route_logger.info(f"Query Filter: {query_filter}, Projection: {query_projection}")
+    
+    mongo_response = collection.find(query_filter, query_projection)
+    results = mongo_response.to_list(length=None)
     route_logger.info(f"mongo_response: {results}")
     
     return str(results)

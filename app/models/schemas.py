@@ -63,3 +63,13 @@ class MongoRequest(BaseModel):
 class SearchParam(BaseModel):
     key: str
     value: str
+
+class GeneralQuery(BaseModel):
+    """
+    Model to handle a generalized MongoDB find operation.
+    """
+    # Filter specifies WHICH documents to retrieve (e.g., {"venue.0": "info.info-ai"})
+    filter: Dict[str, Any] = {} 
+    
+    # Projection specifies WHICH fields to return (e.g., {"title": 1, "authors": 1, "_id": 0})
+    projection: Dict[str, Any] = {}

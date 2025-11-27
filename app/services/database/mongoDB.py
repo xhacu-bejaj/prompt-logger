@@ -17,63 +17,55 @@ MongoDB sends a dict where keys are strings, while the values are either:
                                                                         - list of strings (mongodb array)
 """
 
-@dataclass
-class MongoDB():
-    uri = settings.MONGODB_CONNECTION_STRING
-    client = MongoClient(uri)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+uri = settings.MONGODB_CONNECTION_STRING
+client = MongoClient(uri)
 
 
 
 
 #def send_query_to_mongo(llm_query):
-# try:
-#     db = client.get_database('articles_db')
-#     collection = db.get_collection('articles')
+try:
+    db = client.get_database('articles_db')
+    collection = db.get_collection('articles')
 
-#     query = {"authors":"Modan Tailleur"}
-#     author = collection.find_one(query) 
-    
-#     for key in author.keys():
-#         pprint(f"key: {key}, value type: {type(author[key])}")
-#         if (type(author[key]) is list):
-#             for item in author[key]:
-#                 pprint(f"attribute = {key}; list entry: {item}; list of: {type(item)}")  
-#     print("#################")
-#     #pprint(author)
-#     client.close
+    query = {"authors":"Modan Tailleur"}
+    author = collection.find(query) 
+    print("#################")
+    pprint(type(author))
+    #client.close
 
-# except Exception as e:
-#     raise Exception("Unable to find the document due to the following error: ", e)
+except Exception as e:
+    raise Exception("Unable to find the document due to the following error: ", e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
