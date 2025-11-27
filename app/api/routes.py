@@ -1,5 +1,6 @@
+import json
 from pprint import pprint
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from fastapi import APIRouter, HTTPException, Query
 from pymongo import MongoClient
@@ -83,32 +84,60 @@ def get_prompt_records(
     route_logger.info(f"Retrieved {len(records_pydantic)} prompt records.")
     return records_pydantic
 
-@router.post('/query', response_model=Dict[str, QueryResponse]) #bad
-def generate_query(user_request:MongoRequest):
-    provider = user_request.provider 
-    prompt = user_request.user_prompt
-    
-    try:
-        provider_enum = Provider(provider)
-        client = GenerativeAIClientFactory().create_client(provider_enum)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Invalid provider: {provider}. Must be one of 'mock', 'openai', or 'google'.")
-    
-    try:
-        response_query: Dict[str, QueryResponse] = client.generate(prompt)
-        #return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"LLM Generation Error: {e}")
-    
-    # Now send LLM response to mongodb
-    articles_db = mongo_client.get_database('articles_db')
-    articles_collection = articles_db.get_collection('articles')
+from app.models.schemas import SearchParam
 
-    db_answer = articles_collection.find_one(response_query)
-    #pprint(db_answer)
+@router.post('/query') 
+def raw_query(raw_query:SearchParam):
 
-    mongo_client.close() # for now
-    return db_answer
+    db = mongo_client.get_database('articles_db')
+    collection = db.get_collection('articles')
+
+    # try:
+    #     query_document = json.loads(raw_query)
+    # except json.JSONDecodeError as e:
+    #     route_logger.error(f"Failed to parse query: {e}")
+        
+    #     raise HTTPException(status_code=400, detail="Invalid JSON format for query.")
+    query_document = {raw_query.key : raw_query.value}
+    route_logger.info(f"query_document (Python Dict): {query_document}")
+    
+    mongo_response = collection.find(query_document)
+    results = mongo_response.to_list()
+    route_logger.info(f"mongo_response: {results}")
+    
+    return str(results)
+
 
     
 
+
+
+
+    
+
+# @router.post('/nl2query')
+# def natural2query(user_request:MongoRequest):
+#     provider = user_request.provider 
+#     prompt = user_request.user_prompt
+    
+#     try:
+#         provider_enum = Provider(provider)
+#         client = GenerativeAIClientFactory().create_client(provider_enum)
+#     except ValueError as e:
+#         raise HTTPException(status_code=400, detail=f"Invalid provider: {provider}. Must be one of 'mock', 'openai', or 'google'.")
+    
+#     try:
+#         response_query: Dict[str, QueryResponse] = client.generate(prompt)
+#         #return response
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"LLM Generation Error: {e}")
+    
+#     # Now send LLM response to mongodb
+#     articles_db = mongo_client.get_database('articles_db')
+#     articles_collection = articles_db.get_collection('articles')
+
+#     db_answer = articles_collection.find_one(response_query)
+#     #pprint(db_answer)
+    
+#     mongo_client.close() # for now
+#     return db_answer
