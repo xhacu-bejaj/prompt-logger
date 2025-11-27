@@ -59,3 +59,7 @@ class QueryResponse(BaseModel): # maybe big dict
 class MongoRequest(BaseModel):
     user_prompt: Dict[str, QueryResponse]
     provider: str = Field(default='mock', description="The generative AI provider to use ('openai', 'google', 'mock').")
+
+class SearchParam(BaseModel):
+    key: str
+    value: str
