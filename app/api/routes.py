@@ -102,6 +102,7 @@ def raw_query(raw_query:GeneralQuery):
     mongo_response = mongo_collection.find(query_filter, query_projection)
     results = mongo_response.to_list(length=None)
     serialized_results = serialize_mongo_doc(results)
+    
     route_logger.info(f"cleaned_mongo_response: {serialized_results}")
     
     return serialized_results
