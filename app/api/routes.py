@@ -11,11 +11,16 @@ from app.models.schemas import QueryResponse
 from app.services.client_factory import GenerativeAIClientFactory,Provider
 from app.services.logger import get_history, get_logger
 from app.services.database.database import insert_prompt_record, retrieve_prompt_records 
+from app.services.database.mongoDB_handler import serialize_mongo_doc, MongoDBHandler
 
 router = APIRouter(prefix="/api")
 route_logger = get_logger("ROUTE") 
-uri = settings.MONGODB_CONNECTION_STRING
+
+mongo_handler = MongoDBHandler()
+uri = mongo_handler.uri
 mongo_client = MongoClient(uri)
+mongo_db = mongo_handler.db
+mongo_collection = mongo_handler.collection
 
 @router.get('/health')
 def health():
@@ -84,47 +89,22 @@ def get_prompt_records(
     route_logger.info(f"Retrieved {len(records_pydantic)} prompt records.")
     return records_pydantic
 
-from app.models.schemas import SearchParam
 
 @router.post('/query') 
-def raw_query(raw_query:SearchParam):
-
-    db = mongo_client.get_database('articles_db')
-    collection = db.get_collection('articles')
-
-    # try:
-    #     query_document = json.loads(raw_query)
-    # except json.JSONDecodeError as e:
-    #     route_logger.error(f"Failed to parse query: {e}")
-        
-    #     raise HTTPException(status_code=400, detail="Invalid JSON format for query.")
-    query_document = {raw_query.key : raw_query.value}
-    route_logger.info(f"query_document (Python Dict): {query_document}")
-    
-    mongo_response = collection.find(query_document)
-    results = mongo_response.to_list()
-    route_logger.info(f"mongo_response: {results}")
-    
-    return str(results)
-
-@router.post('/query_experimental') 
-def raw_query_experimental(raw_query:GeneralQuery):
-
-    db = mongo_client.get_database('articles_db')
-    collection = db.get_collection('articles')
-
+def raw_query(raw_query:GeneralQuery):
     query_filter = raw_query.filter
     query_projection = raw_query.projection
     
-    query_projection["_id"] = 0 # mongodb never returns document _id 
+    query_projection["_id"] = 0 # mongodb never returns document _id, which I do not know how to serialize
     
     route_logger.info(f"Query Filter: {query_filter}, Projection: {query_projection}")
     
-    mongo_response = collection.find(query_filter, query_projection)
+    mongo_response = mongo_collection.find(query_filter, query_projection)
     results = mongo_response.to_list(length=None)
-    route_logger.info(f"mongo_response: {results}")
+    serialized_results = serialize_mongo_doc(results)
+    route_logger.info(f"cleaned_mongo_response: {serialized_results}")
     
-    return str(results)
+    return serialized_results
 
 
     
