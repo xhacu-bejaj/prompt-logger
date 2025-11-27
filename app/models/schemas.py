@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
+from bson.objectid import ObjectId
 
 
 class GenerateResponse(BaseModel):
@@ -36,3 +37,22 @@ class PromptRecord(BaseModel):
     llm_response: str
     duration_ms: Optional[int] = Field(default=None, description="Time taken for generation in milliseconds")
     
+
+class QueryResponse(BaseModel): # maybe big dict
+    _id: Optional[ObjectId] = None ########### ObjectId is not a primitive type so pydantic does not know how to serialize it
+    id: Optional[str] = None
+    title: Optional[str] = None
+    article_abstract: Optional[str] = None
+    keywords: Optional[List[str]] = None
+    authors: Optional[List[str]] = None
+    venue: Optional[List[str]] = None
+    date: Optional[datetime] = None
+    teams: Optional[List[str]] = None
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId:str}
+
+
+class MongoRequest(BaseModel):
+    user_prompt: Dict[str, QueryResponse]
+    provider: str = Field(default='mock', description="The generative AI provider to use ('openai', 'google', 'mock').")
