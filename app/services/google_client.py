@@ -57,7 +57,7 @@ class GoogleAIClient(GenerativeAIClient):
         self.config = GenerateContentConfig()
         google_logger.info(f"GoogleAIClient initialized with model: {self.model}")
 
-
+    # TODO: Now that all works you need to make it more general, also in the endpoint
     def generate_query(self, prompt: str, **kwargs: Any) -> GeneralQuery:
         google_logger.info(f"Generating content using Google client for prompt: '{prompt}...'")
         
