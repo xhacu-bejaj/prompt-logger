@@ -93,8 +93,8 @@ def get_prompt_records(
 
 @router.post('/query') 
 def raw_query(raw_query:GeneralQuery):
-    query_filter = raw_query.filter
-    query_projection = raw_query.projection
+    query_filter = json.loads(raw_query.filter) #raw_query.filter
+    query_projection = json.loads(raw_query.projection)#raw_query.projection
     
     query_projection["_id"] = 0 # mongodb never returns document _id, which I do not know how to serialize
     
@@ -109,7 +109,7 @@ def raw_query(raw_query:GeneralQuery):
     return serialized_results
 
 @router.post('/nl2query')
-def nl2query(prompt:str):
+def nl2query(prompt:str) -> GeneralQuery:
     provider='google'
     try:
         provider_enum = Provider(provider)
@@ -123,6 +123,51 @@ def nl2query(prompt:str):
         raise e
     return response
 
+@router.post('/search') 
+def search_nl(prompt: str): 
+    
+    provider = 'google'
+    try:
+        
+        client = GoogleAIClient()
+    except ValueError as e:
+        route_logger.warning(f"Client creation failed for provider {provider}. Error: {e}", exc_info=True)
+        raise HTTPException(status_code=400, detail=f"Invalid provider: {provider}.")
+    
+    try:
+
+        raw_query: GeneralQuery = client.generate_query(prompt)
+    except ValueError as e:
+
+        raise HTTPException(status_code=500, detail=f"LLM Query Generation Failed: {e}")
+    
+ 
+    try:
+        query_filter = json.loads(raw_query.filter)
+        query_projection = json.loads(raw_query.projection) 
+    except json.JSONDecodeError as e:
+        route_logger.error(f"Failed to parse LLM JSON strings: {raw_query.filter} / {raw_query.projection}")
+        raise HTTPException(status_code=500, detail="LLM returned malformed JSON strings for filter/projection.")
+
+    
+    query_projection["_id"] = 0
+    
+    route_logger.info(f"Query Filter: {query_filter}, Projection: {query_projection}")
+    
+
+    try:
+        mongo_response = mongo_collection.find(query_filter, query_projection)
+        results = mongo_response.to_list(length=None)
+        
+        
+        serialized_results = serialize_mongo_doc(results)
+    except Exception as e:
+        route_logger.error(f"MongoDB Execution Failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"MongoDB query execution error: {e}")
+
+    route_logger.info(f"cleaned_mongo_response: {serialized_results}")
+    
+    return serialized_results
     
 
 
