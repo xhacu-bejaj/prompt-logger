@@ -9,6 +9,7 @@ from app.core.settings import settings
 from app.models.schemas import GeneralQuery, GenerateResponse, Log, MongoRequest, PromptRecord, Request
 from app.models.schemas import QueryResponse
 from app.services.client_factory import GenerativeAIClientFactory,Provider
+from app.services.google_client import GoogleAIClient
 from app.services.logger import get_history, get_logger
 from app.services.database.database import insert_prompt_record, retrieve_prompt_records 
 from app.services.database.mongoDB_handler import serialize_mongo_doc, MongoDBHandler
@@ -107,6 +108,20 @@ def raw_query(raw_query:GeneralQuery):
     
     return serialized_results
 
+@router.post('/nl2query')
+def nl2query(prompt:str):
+    provider='google'
+    try:
+        provider_enum = Provider(provider)
+        client = GoogleAIClient()#GenerativeAIClientFactory().create_client(provider_enum)
+    except ValueError as e:
+        route_logger.warning(f"Client creation failed for provider {provider}. Error: {e}", exc_info=True)
+        raise HTTPException(status_code=400, detail=f"Invalid provider: {provider}. Must be one of 'mock', 'openai', or 'google'.")
+    try:
+        response: GeneralQuery = client.generate_query(prompt) # type: ignore[reportCallIssue]
+    except ValueError as e:
+        raise e
+    return response
 
     
 
